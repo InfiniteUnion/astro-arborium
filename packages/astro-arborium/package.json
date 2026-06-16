@@ -1,0 +1,485 @@
+{
+  "name": "astro-arborium",
+  "version": "0.0.1",
+  "description": "Astro integration for Arborium syntax highlighting",
+  "license": "Apache-2.0 OR MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./rehype": {
+      "types": "./dist/rehype.d.ts",
+      "default": "./dist/rehype.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "LICENSE-APACHE",
+    "LICENSE-MIT",
+    "logo.png",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && cp src/style.css dist/style.css",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build && cp README.md LICENSE LICENSE-APACHE LICENSE-MIT ../../"
+  },
+  "dependencies": {
+    "@arborium/arborium": "^2.17.0",
+    "@arborium/bash": "^2.17.0",
+    "@arborium/cpp": "^2.17.0",
+    "@arborium/java": "^2.17.0",
+    "@arborium/markdown": "^2.17.0",
+    "@arborium/rust": "^2.17.0",
+    "@arborium/typescript": "^2.17.0",
+    "@arborium/yaml": "^2.17.0",
+    "hast-util-from-html": "^2.0.3"
+  },
+  "peerDependencies": {
+    "@astrojs/markdown-remark": "^7.0.0",
+    "astro": "^6.0.0",
+    "@arborium/ada": "^2.17.0",
+    "@arborium/agda": "^2.17.0",
+    "@arborium/asciidoc": "^2.17.0",
+    "@arborium/asciidoc_inline": "^2.17.0",
+    "@arborium/asm": "^2.17.0",
+    "@arborium/awk": "^2.17.0",
+    "@arborium/batch": "^2.17.0",
+    "@arborium/c": "^2.17.0",
+    "@arborium/c-sharp": "^2.17.0",
+    "@arborium/caddy": "^2.17.0",
+    "@arborium/capnp": "^2.17.0",
+    "@arborium/cedar": "^2.17.0",
+    "@arborium/cedarschema": "^2.17.0",
+    "@arborium/clojure": "^2.17.0",
+    "@arborium/cmake": "^2.17.0",
+    "@arborium/cobol": "^2.17.0",
+    "@arborium/commonlisp": "^2.17.0",
+    "@arborium/css": "^2.17.0",
+    "@arborium/d": "^2.17.0",
+    "@arborium/dart": "^2.17.0",
+    "@arborium/devicetree": "^2.17.0",
+    "@arborium/diff": "^2.17.0",
+    "@arborium/dockerfile": "^2.17.0",
+    "@arborium/dot": "^2.17.0",
+    "@arborium/elisp": "^2.17.0",
+    "@arborium/elixir": "^2.17.0",
+    "@arborium/elm": "^2.17.0",
+    "@arborium/erlang": "^2.17.0",
+    "@arborium/fish": "^2.17.0",
+    "@arborium/fsharp": "^2.17.0",
+    "@arborium/gitattributes": "^2.17.0",
+    "@arborium/gleam": "^2.17.0",
+    "@arborium/glsl": "^2.17.0",
+    "@arborium/go": "^2.17.0",
+    "@arborium/graphql": "^2.17.0",
+    "@arborium/groovy": "^2.17.0",
+    "@arborium/haskell": "^2.17.0",
+    "@arborium/hcl": "^2.17.0",
+    "@arborium/hlsl": "^2.17.0",
+    "@arborium/html": "^2.17.0",
+    "@arborium/idris": "^2.17.0",
+    "@arborium/ini": "^2.17.0",
+    "@arborium/javascript": "^2.17.0",
+    "@arborium/jinja2": "^2.17.0",
+    "@arborium/jq": "^2.17.0",
+    "@arborium/jsdoc": "^2.17.0",
+    "@arborium/json": "^2.17.0",
+    "@arborium/julia": "^2.17.0",
+    "@arborium/just": "^2.17.0",
+    "@arborium/kconfig": "^2.17.0",
+    "@arborium/kdl": "^2.17.0",
+    "@arborium/kotlin": "^2.17.0",
+    "@arborium/lean": "^2.17.0",
+    "@arborium/lua": "^2.17.0",
+    "@arborium/make": "^2.17.0",
+    "@arborium/matlab": "^2.17.0",
+    "@arborium/meson": "^2.17.0",
+    "@arborium/nginx": "^2.17.0",
+    "@arborium/ninja": "^2.17.0",
+    "@arborium/nix": "^2.17.0",
+    "@arborium/objc": "^2.17.0",
+    "@arborium/ocaml": "^2.17.0",
+    "@arborium/odin": "^2.17.0",
+    "@arborium/perl": "^2.17.0",
+    "@arborium/php": "^2.17.0",
+    "@arborium/postscript": "^2.17.0",
+    "@arborium/powershell": "^2.17.0",
+    "@arborium/prolog": "^2.17.0",
+    "@arborium/proto": "^2.17.0",
+    "@arborium/python": "^2.17.0",
+    "@arborium/query": "^2.17.0",
+    "@arborium/r": "^2.17.0",
+    "@arborium/regex": "^2.17.0",
+    "@arborium/rego": "^2.17.0",
+    "@arborium/rescript": "^2.17.0",
+    "@arborium/ron": "^2.17.0",
+    "@arborium/ruby": "^2.17.0",
+    "@arborium/scala": "^2.17.0",
+    "@arborium/scheme": "^2.17.0",
+    "@arborium/scss": "^2.17.0",
+    "@arborium/solidity": "^2.17.0",
+    "@arborium/sparql": "^2.17.0",
+    "@arborium/sql": "^2.17.0",
+    "@arborium/ssh-config": "^2.17.0",
+    "@arborium/starlark": "^2.17.0",
+    "@arborium/styx": "^2.17.0",
+    "@arborium/svelte": "^2.17.0",
+    "@arborium/swift": "^2.17.0",
+    "@arborium/textproto": "^2.17.0",
+    "@arborium/thrift": "^2.17.0",
+    "@arborium/tlaplus": "^2.17.0",
+    "@arborium/toml": "^2.17.0",
+    "@arborium/tsx": "^2.17.0",
+    "@arborium/typst": "^2.17.0",
+    "@arborium/uiua": "^2.17.0",
+    "@arborium/vb": "^2.17.0",
+    "@arborium/verilog": "^2.17.0",
+    "@arborium/vhdl": "^2.17.0",
+    "@arborium/vim": "^2.17.0",
+    "@arborium/vue": "^2.17.0",
+    "@arborium/wit": "^2.17.0",
+    "@arborium/x86asm": "^2.17.0",
+    "@arborium/xml": "^2.17.0",
+    "@arborium/yuri": "^2.17.0",
+    "@arborium/zig": "^2.17.0",
+    "@arborium/zsh": "^2.17.0"
+  },
+  "peerDependenciesMeta": {
+    "@arborium/ada": {
+      "optional": true
+    },
+    "@arborium/agda": {
+      "optional": true
+    },
+    "@arborium/asciidoc": {
+      "optional": true
+    },
+    "@arborium/asciidoc_inline": {
+      "optional": true
+    },
+    "@arborium/asm": {
+      "optional": true
+    },
+    "@arborium/awk": {
+      "optional": true
+    },
+    "@arborium/batch": {
+      "optional": true
+    },
+    "@arborium/c": {
+      "optional": true
+    },
+    "@arborium/c-sharp": {
+      "optional": true
+    },
+    "@arborium/caddy": {
+      "optional": true
+    },
+    "@arborium/capnp": {
+      "optional": true
+    },
+    "@arborium/cedar": {
+      "optional": true
+    },
+    "@arborium/cedarschema": {
+      "optional": true
+    },
+    "@arborium/clojure": {
+      "optional": true
+    },
+    "@arborium/cmake": {
+      "optional": true
+    },
+    "@arborium/cobol": {
+      "optional": true
+    },
+    "@arborium/commonlisp": {
+      "optional": true
+    },
+    "@arborium/css": {
+      "optional": true
+    },
+    "@arborium/d": {
+      "optional": true
+    },
+    "@arborium/dart": {
+      "optional": true
+    },
+    "@arborium/devicetree": {
+      "optional": true
+    },
+    "@arborium/diff": {
+      "optional": true
+    },
+    "@arborium/dockerfile": {
+      "optional": true
+    },
+    "@arborium/dot": {
+      "optional": true
+    },
+    "@arborium/elisp": {
+      "optional": true
+    },
+    "@arborium/elixir": {
+      "optional": true
+    },
+    "@arborium/elm": {
+      "optional": true
+    },
+    "@arborium/erlang": {
+      "optional": true
+    },
+    "@arborium/fish": {
+      "optional": true
+    },
+    "@arborium/fsharp": {
+      "optional": true
+    },
+    "@arborium/gitattributes": {
+      "optional": true
+    },
+    "@arborium/gleam": {
+      "optional": true
+    },
+    "@arborium/glsl": {
+      "optional": true
+    },
+    "@arborium/go": {
+      "optional": true
+    },
+    "@arborium/graphql": {
+      "optional": true
+    },
+    "@arborium/groovy": {
+      "optional": true
+    },
+    "@arborium/haskell": {
+      "optional": true
+    },
+    "@arborium/hcl": {
+      "optional": true
+    },
+    "@arborium/hlsl": {
+      "optional": true
+    },
+    "@arborium/html": {
+      "optional": true
+    },
+    "@arborium/idris": {
+      "optional": true
+    },
+    "@arborium/ini": {
+      "optional": true
+    },
+    "@arborium/javascript": {
+      "optional": true
+    },
+    "@arborium/jinja2": {
+      "optional": true
+    },
+    "@arborium/jq": {
+      "optional": true
+    },
+    "@arborium/jsdoc": {
+      "optional": true
+    },
+    "@arborium/json": {
+      "optional": true
+    },
+    "@arborium/julia": {
+      "optional": true
+    },
+    "@arborium/just": {
+      "optional": true
+    },
+    "@arborium/kconfig": {
+      "optional": true
+    },
+    "@arborium/kdl": {
+      "optional": true
+    },
+    "@arborium/kotlin": {
+      "optional": true
+    },
+    "@arborium/lean": {
+      "optional": true
+    },
+    "@arborium/lua": {
+      "optional": true
+    },
+    "@arborium/make": {
+      "optional": true
+    },
+    "@arborium/matlab": {
+      "optional": true
+    },
+    "@arborium/meson": {
+      "optional": true
+    },
+    "@arborium/nginx": {
+      "optional": true
+    },
+    "@arborium/ninja": {
+      "optional": true
+    },
+    "@arborium/nix": {
+      "optional": true
+    },
+    "@arborium/objc": {
+      "optional": true
+    },
+    "@arborium/ocaml": {
+      "optional": true
+    },
+    "@arborium/odin": {
+      "optional": true
+    },
+    "@arborium/perl": {
+      "optional": true
+    },
+    "@arborium/php": {
+      "optional": true
+    },
+    "@arborium/postscript": {
+      "optional": true
+    },
+    "@arborium/powershell": {
+      "optional": true
+    },
+    "@arborium/prolog": {
+      "optional": true
+    },
+    "@arborium/proto": {
+      "optional": true
+    },
+    "@arborium/python": {
+      "optional": true
+    },
+    "@arborium/query": {
+      "optional": true
+    },
+    "@arborium/r": {
+      "optional": true
+    },
+    "@arborium/regex": {
+      "optional": true
+    },
+    "@arborium/rego": {
+      "optional": true
+    },
+    "@arborium/rescript": {
+      "optional": true
+    },
+    "@arborium/ron": {
+      "optional": true
+    },
+    "@arborium/ruby": {
+      "optional": true
+    },
+    "@arborium/scala": {
+      "optional": true
+    },
+    "@arborium/scheme": {
+      "optional": true
+    },
+    "@arborium/scss": {
+      "optional": true
+    },
+    "@arborium/solidity": {
+      "optional": true
+    },
+    "@arborium/sparql": {
+      "optional": true
+    },
+    "@arborium/sql": {
+      "optional": true
+    },
+    "@arborium/ssh-config": {
+      "optional": true
+    },
+    "@arborium/starlark": {
+      "optional": true
+    },
+    "@arborium/styx": {
+      "optional": true
+    },
+    "@arborium/svelte": {
+      "optional": true
+    },
+    "@arborium/swift": {
+      "optional": true
+    },
+    "@arborium/textproto": {
+      "optional": true
+    },
+    "@arborium/thrift": {
+      "optional": true
+    },
+    "@arborium/tlaplus": {
+      "optional": true
+    },
+    "@arborium/toml": {
+      "optional": true
+    },
+    "@arborium/tsx": {
+      "optional": true
+    },
+    "@arborium/typst": {
+      "optional": true
+    },
+    "@arborium/uiua": {
+      "optional": true
+    },
+    "@arborium/vb": {
+      "optional": true
+    },
+    "@arborium/verilog": {
+      "optional": true
+    },
+    "@arborium/vhdl": {
+      "optional": true
+    },
+    "@arborium/vim": {
+      "optional": true
+    },
+    "@arborium/vue": {
+      "optional": true
+    },
+    "@arborium/wit": {
+      "optional": true
+    },
+    "@arborium/x86asm": {
+      "optional": true
+    },
+    "@arborium/xml": {
+      "optional": true
+    },
+    "@arborium/yuri": {
+      "optional": true
+    },
+    "@arborium/zig": {
+      "optional": true
+    },
+    "@arborium/zsh": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/hast": "^3.0.4",
+    "@types/node": "^25.9.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "bun@1.3.14"
+}

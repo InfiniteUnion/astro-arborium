@@ -1,0 +1,16 @@
+---
+export interface Props {
+  name: string
+  href: string
+  color?: string
+  meta?: string
+}
+
+const { name, href, color = "var(--lavender)", meta = "lang" } = Astro.props
+---
+
+<a class="lang-card" href={href}>
+  <span class="lang-dot" style={`background: ${color};`}></span>
+  <span class="lang-name">{name}</span>
+  <span class="lang-meta">{meta}</span>
+</a>

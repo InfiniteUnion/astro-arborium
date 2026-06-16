@@ -1,0 +1,277 @@
+---
+layout: ../layouts/Layout.astro
+title: astro-arborium
+---
+
+import ShowcaseTabs from "../components/ShowcaseTabs.astro";
+import LangCard from "../components/LangCard.astro";
+
+<div class="hero hero--split">
+  <div class="hero__text">
+    <div class="hero__features">
+      <span class="pill pill-lavender">🌳 tree-sitter powered</span>
+      <span class="pill pill-blossom">⚡ zero runtime JS</span>
+      <span class="pill pill-mint">🚀 Astro native</span>
+    </div>
+    <h1>
+      Syntax highlighting<br />with a little <span class="word-arborium">Arborium</span>
+    </h1>
+    <p class="hero-tagline">
+      A lightweight Astro integration that hands your fenced code blocks to
+      <code>tree-sitter</code> for fast, precise, language-aware highlighting.
+    </p>
+    <div class="hero__code">
+      ```bash
+      npm i astro-arborium
+      ```
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/InfiniteUnion/astro-arborium">Github ↗</a>
+      <a class="btn btn-secondary" href="https://arborium.bearcove.eu/" target="_blank" rel="noopener noreferrer">Visit Arborium ↗</a>
+    </div>
+  </div>
+  <div class="hero__visual">
+    <img class="hero-logo" src="/logo.webp" alt="Astro Arborium logo" width="600" height="338" />
+  </div>
+</div>
+
+<div class="section" id="showcase">
+  <div class="section-header">
+    <span class="icon" aria-hidden="true">🎨</span>
+    <h2>Highlight showcase</h2>
+  </div>
+  <p class="section-desc">
+    Tree-sitter understands the structure of each language, so keywords, types,
+    strings, comments, and macros are highlighted with real semantic accuracy.
+    Pick a language to see a sample.
+  </p>
+
+  <ShowcaseTabs
+    items={[
+      { id: "rust", title: "Rust", icon: "🦀", tag: "systems", color: "var(--sunshine)" },
+      { id: "typescript", title: "TypeScript", icon: "📘", tag: "web", color: "var(--lavender)" },
+      { id: "bash", title: "Bash", icon: "🐚", tag: "shell", color: "var(--tangerine)" },
+      { id: "cpp", title: "C++", icon: "⚙️", tag: "systems", color: "var(--sky)" },
+      { id: "java", title: "Java", icon: "☕", tag: "jvm", color: "var(--blossom)" },
+      { id: "yaml", title: "YAML", icon: "🔧", tag: "config", color: "var(--mint)" },
+    ]}
+  >
+    <Fragment slot="rust">
+```rust
+use std::fmt::{self, Display};
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum TaskState<T, E> {
+    Pending,
+    Running { started_at: u64 },
+    Done(Result<T, E>),
+}
+
+impl<T: Display, E: Display> TaskState<T, E> {
+    /// Returns true if the task is finished.
+    pub fn is_complete(&self) -> bool {
+        matches!(self, TaskState::Done(Ok(_)))
+    }
+}
+
+#[tokio::main]
+async fn main() {
+    let state = TaskState::Done(Ok("arborium"));
+    println!("state = {:?}", state);
+}
+```
+    </Fragment>
+
+    <Fragment slot="typescript">
+```typescript
+export type Language = "rust" | "typescript" | "bash" | "yaml";
+
+export interface Highlighter<T = string> {
+  readonly language: Language;
+  highlight(source: T): Promise<Highlighted<T>>;
+}
+
+export class ArboriumHighlighter implements Highlighter {
+  constructor(public readonly language: Language) {}
+
+  async highlight(source: string): Promise<Highlighted<string>> {
+    if (!source.trim()) {
+      throw new Error(`Empty ${this.language} source`);
+    }
+    return {
+      language: this.language,
+      html: await render(`Hello, ${this.language}!`),
+    };
+  }
+}
+
+type Highlighted<T> = { language: Language; html: T };
+
+async function render(text: string): Promise<string> {
+  return `<span>${text}</span>`;
+}
+```
+    </Fragment>
+
+    <Fragment slot="bash">
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT="astro-arborium"
+LANGUAGES=(rust typescript bash yaml cpp java markdown)
+
+build_all() {
+  local start
+  start=$(date +%s)
+
+  for lang in "${LANGUAGES[@]}"; do
+    echo "→ Compiling ${lang} grammar..."
+    cargo build --release -p "@arborium/${lang}" || exit 1
+  done
+
+  echo "✓ Built ${#LANGUAGES[@]} grammars in $(( $(date +%s) - start ))s"
+}
+
+if [[ "${1:-}" == "--watch" ]]; then
+  watchexec -e rs,js -- build_all
+else
+  build_all "$@"
+fi
+```
+    </Fragment>
+
+    <Fragment slot="cpp">
+```cpp
+#pragma once
+#include <iostream>
+#include <memory>
+#include <vector>
+
+namespace arborium {
+
+template <typename T>
+class SyntaxTree {
+public:
+    explicit SyntaxTree(std::vector<T> nodes)
+        : nodes_(std::move(nodes)) {}
+
+    std::size_t size() const noexcept { return nodes_.size(); }
+
+    void traverse(auto&& callback) const {
+        for (const auto& node : nodes_) {
+            callback(node);
+        }
+    }
+
+private:
+    std::vector<T> nodes_;
+};
+
+} // namespace arborium
+
+int main() {
+    auto tree = std::make_unique<arborium::SyntaxTree<int>>(
+        std::vector<int>{1, 2, 3});
+    std::cout << "nodes: " << tree->size() << '\n';
+    return 0;
+}
+```
+    </Fragment>
+
+    <Fragment slot="java">
+```java
+package dev.arborium;
+
+import java.util.List;
+import java.util.Optional;
+
+public record HighlightRequest(String source, String language) {
+    public HighlightRequest {
+        if (source == null || source.isBlank()) {
+            throw new IllegalArgumentException("source must not be empty");
+        }
+    }
+}
+
+public class ArboriumHighlighter {
+    private static final List<String> SUPPORTED = List.of(
+        "rust", "typescript", "bash", "yaml", "cpp", "java", "markdown"
+    );
+
+    public Optional<String> highlight(HighlightRequest request) {
+        if (!SUPPORTED.contains(request.language())) {
+            return Optional.empty();
+        }
+        return Optional.of(render(request.source()));
+    }
+
+    private String render(String source) {
+        return "<code>" + source + "</code>";
+    }
+}
+```
+    </Fragment>
+
+    <Fragment slot="markdown">
+````markdown
+# Arborium
+
+A **tree-sitter** based highlighter for Astro.
+
+## Features
+
+- Fast, semantic highlighting
+- Zero client-side JS
+- Copy-to-clipboard code frames
+
+> Syntax highlighting should be *accurate*, not just colorful.
+
+Check out the [repo](https://github.com/bearcove/arborium).
+
+```rust
+fn main() {
+    println!("hello");
+}
+```
+````
+    </Fragment>
+
+    <Fragment slot="yaml">
+```yaml
+name: astro-arborium
+version: 0.0.1
+description: An Astro integration for syntax highlighting
+keywords:
+  - astro
+  - syntax-highlighting
+  - tree-sitter
+
+astro:
+  markdown:
+    syntaxHighlight: false
+  integrations:
+    - astro-arborium
+
+scripts:
+  dev: astro dev
+  build: astro build
+  preview: astro preview
+
+dependencies:
+  astro: ^6.4.2
+  tailwindcss: ^4.3.0
+```
+    </Fragment>
+  </ShowcaseTabs>
+</div>
+
+<div class="cta-card" id="install">
+  <h2>Ready to plant some color?</h2>
+  <p>Add <code>astro-arborium</code> to your Astro project, disable the default syntax highlighter, and let Arborium handle the rest.</p>
+  <p><a class="btn" href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">Read the docs ↗</a></p>
+</div>
+
+<footer class="site-footer">
+  <p>Made with 💜 for Astro · <a href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">InfiniteUnion/astro-arborium</a></p>
+</footer>

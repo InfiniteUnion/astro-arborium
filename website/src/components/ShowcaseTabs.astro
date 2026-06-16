@@ -1,0 +1,62 @@
+---
+export interface Props {
+  items: Array<{
+    id: string
+    title: string
+    icon: string
+    tag: string
+    color?: string
+  }>
+}
+
+const { items } = Astro.props
+
+const panels = await Promise.all(
+  items.map(async (item) => {
+    const html = await Astro.slots.render(item.id)
+    return { ...item, html }
+  })
+)
+---
+
+<div class="showcase-tabs">
+  {
+    items.map((item, index) => (
+      <input
+        type="radio"
+        name="showcase-tab"
+        id={`showcase-tab-${item.id}`}
+        class="showcase-tab-input"
+        checked={index === 0}
+      />
+    ))
+  }
+
+  <div class="showcase-tab-bar" role="tablist" aria-label="Language showcase">
+    {
+      items.map((item) => (
+        <label
+          for={`showcase-tab-${item.id}`}
+          class="showcase-tab"
+          role="tab"
+          style={`--tab-color: ${item.color || "var(--lavender)"};`}
+        >
+          <span class="showcase-tab-icon" aria-hidden="true">{item.icon}</span>
+          <span class="showcase-tab-name">{item.title}</span>
+          <span class="showcase-tab-tag">{item.tag}</span>
+        </label>
+      ))
+    }
+  </div>
+
+  {
+    panels.map((panel) => (
+      <section
+        class={`showcase-panel showcase-panel--${panel.id}`}
+        role="tabpanel"
+        aria-labelledby={`showcase-tab-${panel.id}`}
+        set:html={panel.html}
+      />
+    ))
+  }
+</div>
