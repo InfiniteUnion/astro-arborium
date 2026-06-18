@@ -1,8 +1,8 @@
 import { highlight, normalizeLanguage } from "@arborium/arborium"
-import type { ArboriumConfig } from "@arborium/arborium"
 import { fromHtml } from "hast-util-from-html"
 import type { Element, ElementContent, Root, RootContent } from "hast"
-import { readFile } from "node:fs/promises"
+import { arboriumConfig } from "./highlight.js"
+import { getLanguageLabel } from "./labels.js"
 
 /**
  * Default languages highlighted when no `languages` option is provided.
@@ -139,153 +139,24 @@ export const ALL_LANGUAGES = [
   "zsh",
 ]
 
-const LANGUAGE_LABELS: Record<string, string> = {
-  ada: "Ada",
-  agda: "Agda",
-  asciidoc: "AsciiDoc",
-  asciidoc_inline: "AsciiDoc Inline",
-  asm: "Assembly",
-  awk: "AWK",
-  bash: "Bash",
-  batch: "Batch",
-  c: "C",
-  "c-sharp": "C#",
-  caddy: "Caddyfile",
-  capnp: "Cap'n Proto",
-  cedar: "Cedar",
-  cedarschema: "Cedar Schema",
-  clojure: "Clojure",
-  cmake: "CMake",
-  cobol: "COBOL",
-  commonlisp: "Common Lisp",
-  cpp: "C++",
-  css: "CSS",
-  d: "D",
-  dart: "Dart",
-  devicetree: "Device Tree",
-  diff: "Diff",
-  dockerfile: "Dockerfile",
-  dot: "DOT",
-  elisp: "Emacs Lisp",
-  elixir: "Elixir",
-  elm: "Elm",
-  erlang: "Erlang",
-  fish: "Fish",
-  fsharp: "F#",
-  gitattributes: "Git Attributes",
-  gleam: "Gleam",
-  glsl: "GLSL",
-  go: "Go",
-  graphql: "GraphQL",
-  groovy: "Groovy",
-  haskell: "Haskell",
-  hcl: "HCL",
-  hlsl: "HLSL",
-  html: "HTML",
-  idris: "Idris",
-  ini: "INI",
-  java: "Java",
-  javascript: "JavaScript",
-  jinja2: "Jinja2",
-  jq: "jq",
-  jsdoc: "JSDoc",
-  json: "JSON",
-  julia: "Julia",
-  just: "Just",
-  kconfig: "Kconfig",
-  kdl: "KDL",
-  kotlin: "Kotlin",
-  lean: "Lean",
-  lua: "Lua",
-  make: "Makefile",
-  markdown: "Markdown",
-  matlab: "MATLAB",
-  meson: "Meson",
-  nginx: "nginx",
-  ninja: "Ninja",
-  nix: "Nix",
-  objc: "Objective-C",
-  ocaml: "OCaml",
-  odin: "Odin",
-  perl: "Perl",
-  php: "PHP",
-  postscript: "PostScript",
-  powershell: "PowerShell",
-  prolog: "Prolog",
-  proto: "Protocol Buffers",
-  python: "Python",
-  query: "Tree-sitter Query",
-  r: "R",
-  regex: "Regex",
-  rego: "Rego",
-  rescript: "ReScript",
-  ron: "RON",
-  ruby: "Ruby",
-  rust: "Rust",
-  scala: "Scala",
-  scheme: "Scheme",
-  scss: "SCSS",
-  solidity: "Solidity",
-  sparql: "SPARQL",
-  sql: "SQL",
-  "ssh-config": "SSH Config",
-  starlark: "Starlark",
-  styx: "Styx",
-  svelte: "Svelte",
-  swift: "Swift",
-  textproto: "Text Proto",
-  thrift: "Thrift",
-  tlaplus: "TLA+",
-  toml: "TOML",
-  tsx: "TSX",
-  typescript: "TypeScript",
-  typst: "Typst",
-  uiua: "Uiua",
-  vb: "Visual Basic",
-  verilog: "Verilog",
-  vhdl: "VHDL",
-  vim: "Vim",
-  vue: "Vue",
-  wit: "WIT",
-  x86asm: "x86 Assembly",
-  xml: "XML",
-  yaml: "YAML",
-  yuri: "Yuri",
-  zig: "Zig",
-  zsh: "Zsh",
-}
-
-const arboriumConfig: ArboriumConfig = {
-  logger: {
-    debug() {},
-    warn: console.warn,
-    error: console.error,
-  },
-  resolveHostJs: () => import("@arborium/arborium/arborium_host.js"),
-  resolveHostWasm: () =>
-    readFile(
-      new URL(import.meta.resolve("@arborium/arborium/arborium_host_bg.wasm"))
-    ),
-  resolveJs: ({ language }) => import(`@arborium/${language}/grammar.js`),
-  resolveWasm: ({ language }) =>
-    readFile(
-      new URL(import.meta.resolve(`@arborium/${language}/grammar_bg.wasm`))
-    ),
-}
-
 export interface RehypeArboriumOptions {
   /** Languages to highlight. Defaults to the original 7 languages. */
   languages?: string[]
 }
 
 /**
- * Rehype plugin factory for Arborium syntax highlighting.
+ * Rehype plugin that highlights `pre > code` blocks with Arborium.
+ *
+ * Replaces the code's children with highlighted spans and stamps the language
+ * onto `data-arborium-language` attributes on both the `<pre>` and `<code>`.
+ * Does **not** add a code frame or copy button — pair it with `rehypeCodeFrame`
+ * (or use the default `rehypeArborium`, which runs both) for the chrome.
  */
-export default function rehypeArborium(options: RehypeArboriumOptions = {}) {
+export function rehypeHighlight(options: RehypeArboriumOptions = {}) {
   const languages = new Set(options.languages ?? DEFAULT_LANGUAGES)
 
   return async function transform(tree: Root): Promise<void> {
-    await visitCodeBlocks(tree, async (parent, index, pre, code) => {
+    await visitCodeBlocks(tree, async (_parent, _index, pre, code) => {
       const language = getLanguage(code)
       if (!language || !languages.has(language)) return
 
@@ -307,11 +178,43 @@ export default function rehypeArborium(options: RehypeArboriumOptions = {}) {
         "data-arborium": "",
         "data-arborium-language": language,
       }
+    })
+  }
+}
 
+/**
+ * Rehype plugin that wraps highlighted `pre` blocks (those stamped with
+ * `data-arborium` by `rehypeHighlight`) in a code frame with a language label
+ * and copy button. No highlighting is performed.
+ */
+export function rehypeCodeFrame() {
+  return async function transform(tree: Root): Promise<void> {
+    await visitCodeBlocks(tree, async (parent, index, pre) => {
+      if (!hasArboriumMarker(pre)) return
+      const language = stringProperty(pre.properties?.["data-arborium-language"])
+      if (!language) return
       if (!parent || typeof index !== "number") return
       parent.children[index] = createCodeFrame(language, pre)
     })
   }
+}
+
+/**
+ * Default rehype plugin for Arborium: runs `rehypeHighlight` followed by
+ * `rehypeCodeFrame`. Equivalent to using both in sequence.
+ */
+export default function rehypeArborium(options: RehypeArboriumOptions = {}) {
+  const highlightPlugin = rehypeHighlight(options)
+  const framePlugin = rehypeCodeFrame()
+
+  return async function transform(tree: Root): Promise<void> {
+    await highlightPlugin(tree)
+    await framePlugin(tree)
+  }
+}
+
+function hasArboriumMarker(pre: Element): boolean {
+  return "data-arborium" in (pre.properties ?? {})
 }
 
 type CodeBlockVisitor = (
@@ -345,8 +248,8 @@ async function visitCodeBlocks(
   }
 }
 
-function createCodeFrame(language: string, pre: Element): Element {
-  const label = LANGUAGE_LABELS[language] ?? language
+export function createCodeFrame(language: string, pre: Element): Element {
+  const label = getLanguageLabel(language)
 
   return {
     type: "element",

@@ -5,6 +5,13 @@ import { createThemeCss, THEMES, validateTheme } from "./theme.js"
 import type { ThemeOption } from "./theme.js"
 
 export { ALL_LANGUAGES, DEFAULT_LANGUAGES, THEMES }
+export {
+  rehypeHighlight,
+  rehypeCodeFrame,
+  createCodeFrame,
+} from "./rehype.js"
+export { arboriumConfig, createArboriumConfig, highlightCode } from "./highlight.js"
+export { getLanguageLabel, LANGUAGE_LABELS } from "./labels.js"
 export type { ThemeName, ThemeOption } from "./theme.js"
 
 export interface ArboriumOptions {

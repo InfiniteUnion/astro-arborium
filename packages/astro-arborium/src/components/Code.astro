@@ -1,0 +1,61 @@
+---
+import { highlightCode } from "astro-arborium/highlight"
+import { getLanguageLabel } from "astro-arborium/labels"
+
+interface Props {
+  /** Arborium language identifier, e.g. `"typescript"`, `"c-sharp"`. */
+  language: string
+  /** Raw source code to highlight. */
+  src: string
+}
+
+const { language, src } = Astro.props
+const label = getLanguageLabel(language)
+const html = await highlightCode(language, src)
+---
+
+<figure class="code-frame" data-code-language={language}>
+  <figcaption class="code-frame__header">
+    <span class="code-frame__label">{label}</span>
+    <button
+      class="code-frame__copy"
+      type="button"
+      data-code-copy=""
+      aria-label={`Copy ${label} code`}
+      title="Copy code"
+    >
+      <svg
+        class="code-frame__copy-icon code-frame__copy-icon--copy"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="square"
+        stroke-linejoin="miter"
+        aria-hidden="true"
+      >
+        <rect x="8" y="8" width="10" height="10"></rect>
+        <path d="M6 16H4V4h12v2"></path>
+      </svg>
+      <svg
+        class="code-frame__copy-icon code-frame__copy-icon--check"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="square"
+        stroke-linejoin="miter"
+        aria-hidden="true"
+      >
+        <path d="M5 12.5 10 17 19 7"></path>
+      </svg>
+    </button>
+  </figcaption>
+  <pre data-arborium="" data-arborium-language={language}>
+    <code data-arborium-language={language} set:html={html} />
+  </pre>
+</figure>
+
+<script>
+  import "../client.js"
+</script>

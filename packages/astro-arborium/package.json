@@ -13,6 +13,15 @@
       "types": "./dist/rehype.d.ts",
       "default": "./dist/rehype.js"
     },
+    "./highlight": {
+      "types": "./dist/highlight.d.ts",
+      "default": "./dist/highlight.js"
+    },
+    "./labels": {
+      "types": "./dist/labels.d.ts",
+      "default": "./dist/labels.js"
+    },
+    "./components": "./dist/components/Code.astro",
     "./style.css": "./dist/style.css",
     "./client": {
       "types": "./dist/client.d.ts",
@@ -28,7 +37,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && cp src/style.css dist/style.css",
+    "build": "tsc && cp src/style.css dist/style.css && cp -r src/components dist/components",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "bun run build && cp README.md LICENSE LICENSE-APACHE LICENSE-MIT ../../"
   },
