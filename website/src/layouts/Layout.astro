@@ -10,6 +10,18 @@ const { title = "astro-arborium" } = Astro.props
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Astro integration for Arborium tree-sitter syntax highlighting." />
+    <meta name="theme-color" content="#fffaf4" data-theme-color="#fffaf4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#17131f" data-theme-color="#17131f" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem("astro-arborium-theme")
+          if (theme === "light" || theme === "dark") {
+            document.documentElement.dataset.theme = theme
+          }
+        } catch {}
+      })()
+    </script>
     <title>{title}</title>
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -23,6 +35,20 @@ const { title = "astro-arborium" } = Astro.props
     />
   </head>
   <body>
+    <div class="theme-picker" role="group" aria-label="Color theme">
+      <button class="theme-picker__button" type="button" data-theme-value="system" aria-pressed="true">
+        <span class="theme-picker__icon" aria-hidden="true">◐</span>
+        System
+      </button>
+      <button class="theme-picker__button" type="button" data-theme-value="light" aria-pressed="false">
+        <span class="theme-picker__icon" aria-hidden="true">☀</span>
+        Light
+      </button>
+      <button class="theme-picker__button" type="button" data-theme-value="dark" aria-pressed="false">
+        <span class="theme-picker__icon" aria-hidden="true">☾</span>
+        Dark
+      </button>
+    </div>
     <div class="page-bg" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
@@ -39,5 +65,45 @@ const { title = "astro-arborium" } = Astro.props
     <main>
       <slot />
     </main>
+    <script is:inline>
+      (() => {
+        const storageKey = "astro-arborium-theme"
+        const root = document.documentElement
+        const buttons = [...document.querySelectorAll("[data-theme-value]")]
+        const themeColors = { light: "#fffaf4", dark: "#17131f" }
+        const themeMetas = [...document.querySelectorAll("meta[name='theme-color']")]
+
+        const setTheme = (theme) => {
+          if (theme === "system") {
+            delete root.dataset.theme
+          } else {
+            root.dataset.theme = theme
+          }
+
+          for (const button of buttons) {
+            button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme))
+          }
+
+          for (const meta of themeMetas) {
+            meta.content = theme === "system" ? meta.dataset.themeColor : themeColors[theme]
+          }
+
+          try {
+            if (theme === "system") localStorage.removeItem(storageKey)
+            else localStorage.setItem(storageKey, theme)
+          } catch {}
+        }
+
+        const initialTheme = root.dataset.theme === "light" || root.dataset.theme === "dark"
+          ? root.dataset.theme
+          : "system"
+
+        setTheme(initialTheme)
+
+        for (const button of buttons) {
+          button.addEventListener("click", () => setTheme(button.dataset.themeValue))
+        }
+      })()
+    </script>
   </body>
 </html>

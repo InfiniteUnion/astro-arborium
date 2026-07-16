@@ -63,10 +63,12 @@ function init(): void {
 
 if (typeof document !== "undefined") {
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init)
+    document.addEventListener("DOMContentLoaded", init, { once: true })
   } else {
     init()
   }
+
+  document.addEventListener("astro:page-load", init)
 }
 
 export {}

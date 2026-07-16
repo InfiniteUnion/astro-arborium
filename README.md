@@ -8,6 +8,8 @@ Astro integration for [Arborium](https://github.com/bearcove/arborium) syntax hi
 
 Highlights code in Markdown, MDX, and anywhere else you render code blocks in Astro — with a code frame, language label, and copy button.
 
+Requires Astro 7.
+
 ## Install
 
 ```sh
@@ -115,17 +117,17 @@ const html = await highlightCode("rust", "fn main() {}")
 Pass a `languages` array to control which code blocks are highlighted. Defaults to the original 7 languages.
 
 ```js
-import arborium, { ALL_LANGUAGES, DEFAULT_LANGUAGES } from "astro-arborium"
+import arborium, { ALL_LANGUAGES } from "astro-arborium"
+
+// Highlight every language Arborium supports.
+const languages = ALL_LANGUAGES
+
+// Or replace the line above with a custom subset:
+// const languages = ["rust", "typescript"]
 
 export default defineConfig({
   markdown: { syntaxHighlight: false },
-  integrations: [
-    // highlight every language Arborium supports
-    arborium({ languages: ALL_LANGUAGES }),
-
-    // or just a few
-    arborium({ languages: ["rust", "typescript"] }),
-  ],
+  integrations: [arborium({ languages })],
 })
 ```
 
@@ -136,26 +138,24 @@ Language identifiers match the Arborium package names (e.g. `c-sharp`, `cpp`, `t
 Pass a `theme` option to pick one of Arborium's bundled themes. Defaults to `"one-dark"`.
 
 ```js
-import arborium, { THEMES } from "astro-arborium"
+import arborium from "astro-arborium"
+
+// Use different themes for light and dark mode.
+const theme = { light: "github-light", dark: "one-dark" }
+
+// Or replace the line above with a single theme or no bundled theme styles:
+// const theme = "tokyo-night"
+// const theme = false
 
 export default defineConfig({
   markdown: { syntaxHighlight: false },
-  integrations: [
-    // single theme, always applied
-    arborium({ theme: "tokyo-night" }),
-
-    // different themes for light / dark mode
-    arborium({ theme: { light: "github-light", dark: "one-dark" } }),
-
-    // disable auto-injected styles and bring your own CSS
-    arborium({ theme: false }),
-  ],
+  integrations: [arborium({ theme })],
 })
 ```
 
 `THEMES` exports all 33 bundled theme names.
 
-When `theme: false`, no styles are injected automatically. You can still import `astro-arborium/style.css` for the original One Dark look, or bring your own Arborium theme CSS.
+When `theme: false`, no styles are bundled automatically. You can still import `astro-arborium/style.css` for the original One Dark look, or bring your own Arborium theme CSS.
 
 ## Supported languages
 

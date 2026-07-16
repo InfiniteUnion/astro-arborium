@@ -346,7 +346,9 @@ function createCheckIcon(): Element {
 }
 
 function getLanguage(code: Element): string | null {
-  const classNames = code.properties?.className
+  // HAST types className as a token array, while external trees may still
+  // provide a space-separated string at runtime.
+  const classNames: unknown = code.properties?.className
   const classes: Array<string | number> = Array.isArray(classNames)
     ? classNames
     : typeof classNames === "string"

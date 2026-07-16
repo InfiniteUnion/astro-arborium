@@ -22,9 +22,18 @@ export interface ArboriumOptions {
   languages?: string[]
   /**
    * Theme to use. Pass a string for a single theme, an object for light/dark mode
-   * switching, or `false` to disable auto-injected styles. Defaults to `"one-dark"`.
+   * switching, or `false` to disable bundled styles. Defaults to `"one-dark"`.
    */
   theme?: ThemeOption | false
+}
+
+function themeModuleId(theme: ThemeOption): string {
+  const key =
+    typeof theme === "string"
+      ? theme
+      : `${theme.light ?? "github-light"}-${theme.dark ?? "one-dark"}`
+
+  return `virtual:astro-arborium/theme-${key}.css`
 }
 
 /**
@@ -59,15 +68,30 @@ export default function arborium(options: ArboriumOptions = {}): AstroIntegratio
         })
 
         if (theme !== false) {
-          // Wrap the injected styles in a cascade layer so consumers can
-          // override Arborium's defaults (theme tokens, code-frame chrome,
-          // the copy button) with their own unlayered CSS, regardless of the
-          // fact that this <style> is appended to the end of <head> at runtime.
+          // Expose the generated theme as a virtual CSS module so Vite can
+          // bundle it into Astro's normal stylesheet pipeline. The cascade
+          // layer lets consumers override Arborium with unlayered CSS.
           const css = `@layer arborium {\n${await createThemeCss(theme)}\n}`
-          injectScript(
-            "page",
-            `document.head.insertAdjacentHTML("beforeend", "<style>" + ${JSON.stringify(css)} + "</style>");`,
-          )
+          const moduleId = themeModuleId(theme)
+          const resolvedModuleId = `\0${moduleId}`
+
+          updateConfig({
+            vite: {
+              plugins: [
+                {
+                  name: "astro-arborium:theme",
+                  resolveId(id) {
+                    if (id === moduleId) return resolvedModuleId
+                  },
+                  load(id) {
+                    if (id === resolvedModuleId) return css
+                  },
+                },
+              ],
+            },
+          })
+
+          injectScript("page-ssr", `import ${JSON.stringify(moduleId)};`)
         }
 
         injectScript("page", 'import "astro-arborium/client";')

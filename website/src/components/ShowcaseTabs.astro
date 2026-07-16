@@ -19,7 +19,9 @@ const panels = await Promise.all(
 )
 ---
 
-<div class="showcase-tabs">
+<fieldset class="showcase-tabs">
+  <legend class="showcase-tabs-legend">Language showcase</legend>
+
   {
     items.map((item, index) => (
       <input
@@ -32,13 +34,12 @@ const panels = await Promise.all(
     ))
   }
 
-  <div class="showcase-tab-bar" role="tablist" aria-label="Language showcase">
+  <div class="showcase-tab-bar">
     {
       items.map((item) => (
         <label
           for={`showcase-tab-${item.id}`}
           class="showcase-tab"
-          role="tab"
           style={`--tab-color: ${item.color || "var(--lavender)"};`}
         >
           <span class="showcase-tab-icon" aria-hidden="true">{item.icon}</span>
@@ -53,10 +54,8 @@ const panels = await Promise.all(
     panels.map((panel) => (
       <section
         class={`showcase-panel showcase-panel--${panel.id}`}
-        role="tabpanel"
-        aria-labelledby={`showcase-tab-${panel.id}`}
         set:html={panel.html}
       />
     ))
   }
-</div>
+</fieldset>

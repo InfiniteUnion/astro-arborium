@@ -53,8 +53,8 @@
     "hast-util-from-html": "^2.0.3"
   },
   "peerDependencies": {
-    "@astrojs/markdown-remark": "^7.0.0",
-    "astro": "^6.0.0",
+    "@astrojs/markdown-remark": "^7.2.1",
+    "astro": "^7.0.0",
     "@arborium/ada": "^2.17.0",
     "@arborium/agda": "^2.17.0",
     "@arborium/asciidoc": "^2.17.0",

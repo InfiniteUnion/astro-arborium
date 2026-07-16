@@ -11,7 +11,10 @@ export default defineConfig({
   },
   integrations: [
     arborium({
-      theme: "catppuccin-latte",
+      theme: {
+        light: "catppuccin-latte",
+        dark: "catppuccin-mocha",
+      },
     }),
   ],
 })
