@@ -1,0 +1,14 @@
+packages:
+  - "packages/*"
+  - "website"
+
+# Allow install scripts only for trusted packages (pnpm blocks them by default).
+allowBuilds:
+  esbuild: true
+
+# Security: minimum release age for dependencies.
+# Versions published less than this many minutes ago are not installed.
+# Most malicious releases are detected and removed from the registry within
+# hours, so the 1-day delay (1440 minutes) closes the exposure window.
+# Applies to all dependencies, including transitive ones.
+minimumReleaseAge: 1440

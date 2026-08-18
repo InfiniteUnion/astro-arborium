@@ -13,13 +13,13 @@ Requires Astro 7.
 ## Install
 
 ```sh
-bun add astro-arborium
+pnpm add astro-arborium
 ```
 
 The default languages are bundled with `astro-arborium`. If you enable any other language, install its grammar package separately:
 
 ```sh
-bun add @arborium/python @arborium/go @arborium/json
+pnpm add @arborium/python @arborium/go @arborium/json
 ```
 
 ## Features
@@ -110,7 +110,13 @@ const html = await highlightCode("rust", "fn main() {}")
 
 `highlightCode()` returns an HTML string of highlighted spans only — no frame, copy button, or CSS. Use the `<Code>` component for the full chrome, or `createCodeFrame()` from `astro-arborium/rehype` to build the frame markup yourself. The copy-button behavior is selector-driven (`[data-code-copy]`), so add `import "astro-arborium/client"` via a `<script>` tag if you build the frame yourself.
 
-> **Resolution note:** `<Code>` and `highlightCode()` run Arborium at render time, so `@arborium/arborium` must be resolvable from your project. This is automatic when you install `astro-arborium` with npm, yarn, or bun (it's a transitive dependency and gets hoisted). With pnpm or in a monorepo, ensure `@arborium/arborium` is installed/hoisted at the project root — otherwise highlighting silently falls back to plain text (a `[arborium] Failed to load host` warning appears in the build log). The rehype plugins are unaffected because they resolve from the `astro-arborium` package itself.
+> **Resolution note:** `<Code>` and `highlightCode()` run Arborium at render time, so `@arborium/arborium` must be resolvable from your project. pnpm's isolated `node_modules` doesn't hoist transitive dependencies, so install it as a direct dependency:
+>
+> ```sh
+> pnpm add @arborium/arborium
+> ```
+>
+> Without it, highlighting silently falls back to plain text (a `[arborium] Failed to load host` warning appears in the build log). The rehype plugins are unaffected because they resolve from the `astro-arborium` package itself.
 
 ## Configuration
 
