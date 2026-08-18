@@ -4,9 +4,9 @@
 
 # astro-arborium
 
-Astro integration for [Arborium](https://github.com/bearcove/arborium) syntax highlighting.
+An Astro integration for [Arborium](https://github.com/bearcove/arborium) syntax highlighting.
 
-Highlights code in Markdown, MDX, and anywhere else you render code blocks in Astro — with a code frame, language label, and copy button.
+astro-arborium highlights code in Markdown, MDX, and anywhere else you render code blocks in Astro. Each highlighted block gets a code frame, a language label, and a copy button.
 
 Requires Astro 7.
 
@@ -16,7 +16,7 @@ Requires Astro 7.
 pnpm add astro-arborium
 ```
 
-The default languages are bundled with `astro-arborium`. If you enable any other language, install its grammar package separately:
+`astro-arborium` bundles the default languages. If you enable any other language, install its grammar package separately:
 
 ```sh
 pnpm add @arborium/python @arborium/go @arborium/json
@@ -24,18 +24,18 @@ pnpm add @arborium/python @arborium/go @arborium/json
 
 ## Features
 
-The integration automatically:
+The integration performs the following tasks:
 
-- highlights fenced code blocks with Arborium (WASM-backed tree-sitter grammars),
-- wraps them in a code frame with a language label and copy button,
-- injects the required CSS,
-- wires up the copy-button client behavior.
+- Highlights fenced code blocks with the WebAssembly-backed tree-sitter grammars from Arborium.
+- Wraps each block in a code frame with a language label and a copy button.
+- Injects the theme CSS.
+- Loads the copy-button client script.
 
-For code that does **not** flow through Markdown (raw `<pre><code>` in `.astro` components, custom HTML, CMS content), astro-arborium also exposes the building blocks individually — see [Standalone usage](#standalone-usage) and [Direct usage](#direct-usage).
+For code that does not flow through Markdown—for example, raw `<pre><code>` blocks in `.astro` components, custom HTML, or CMS content—you can use the building blocks individually. See [Standalone usage](#standalone-usage) and [Direct usage](#direct-usage).
 
 ## Usage as an Astro integration
 
-For Markdown and MDX: add the integration and disable Astro's built-in syntax highlighting.
+For Markdown and MDX, add the integration and disable Astro's built-in syntax highlighting.
 
 ```js
 // astro.config.mjs
@@ -50,11 +50,11 @@ export default defineConfig({
 })
 ```
 
-Fenced code blocks in `.md` and `.mdx` files are highlighted automatically. MDX is covered because it flows through Astro's Markdown processor — no extra setup is needed.
+The integration highlights fenced code blocks in `.md` and `.mdx` files automatically. MDX works the same way because MDX content flows through Astro's Markdown processor.
 
 ## Standalone usage
 
-If you render code through your own unified/rehype pipeline (for example, a custom MDX configuration or a hand-built processor), use the rehype plugins directly from `astro-arborium/rehype`:
+If you render code through your own unified or rehype pipeline—for example, a custom MDX configuration or a hand-built processor—use the rehype plugins directly from the `astro-arborium/rehype` subpath:
 
 ```js
 import { unified } from "unified"
@@ -69,9 +69,10 @@ const processor = unified()
   .use(rehypeCodeFrame)
 ```
 
-`rehypeHighlight` and `rehypeCodeFrame` are also available individually, so you can highlight without the frame, or frame pre-highlighted markup. The default export `rehypeArborium` runs both in sequence.
+You can also use `rehypeHighlight` and `rehypeCodeFrame` individually: highlight without the frame, or frame pre-highlighted markup. The default export, `rehypeArborium`, runs both in sequence.
 
-> **Note:** Outside the Astro integration, the copy-button script and theme CSS are **not** injected for you. Add them in a layout (CSS as a normal import, the client script in a `<script>` tag so it runs in the browser):
+> [!NOTE]
+> Outside the Astro integration, the copy-button script and the theme CSS are not injected for you. Add them in a layout: import the CSS, and include the client script in a `<script>` tag so it runs in the browser.
 >
 > ```astro
 > ---
@@ -84,7 +85,7 @@ const processor = unified()
 
 ## Direct usage
 
-For code blocks authored directly inside `.astro` components (which never enter the rehype pipeline), use the `<Code>` component:
+For code blocks that you write directly inside `.astro` components, use the `<Code>` component. Code blocks in components do not enter the rehype pipeline.
 
 ```astro
 ---
@@ -95,9 +96,9 @@ import "astro-arborium/style.css" // theme CSS (or use the integration / your ow
 <Code language="typescript" src={`const answer: number = 42`} />
 ```
 
-The component highlights the source and renders the same code frame, language label, and copy button as Markdown code blocks. It bundles the copy-button client script itself, so you only need to bring the CSS — via the integration, `astro-arborium/style.css` (default One Dark), or your own Arborium theme CSS.
+The component highlights the source and renders the same code frame, language label, and copy button as Markdown code blocks. It bundles the copy-button client script, so you only need to provide the CSS—via the integration, the `astro-arborium/style.css` file (default One Dark theme), or your own Arborium theme CSS.
 
-For lower-level control — for example, emitting highlighted HTML into your own markup — call `highlightCode()` directly:
+For lower-level control—for example, emitting highlighted HTML into your own markup—call `highlightCode()` directly:
 
 ```astro
 ---
@@ -108,19 +109,20 @@ const html = await highlightCode("rust", "fn main() {}")
 <pre><code set:html={html} /></pre>
 ```
 
-`highlightCode()` returns an HTML string of highlighted spans only — no frame, copy button, or CSS. Use the `<Code>` component for the full chrome, or `createCodeFrame()` from `astro-arborium/rehype` to build the frame markup yourself. The copy-button behavior is selector-driven (`[data-code-copy]`), so add `import "astro-arborium/client"` via a `<script>` tag if you build the frame yourself.
+`highlightCode()` returns an HTML string of highlighted spans only—no frame, copy button, or CSS. Use the `<Code>` component when you want the full code frame, or `createCodeFrame()` from the `astro-arborium/rehype` subpath to build the frame markup yourself. The copy-button script targets the `[data-code-copy]` selector, so if you build the frame yourself, add `import "astro-arborium/client"` in a `<script>` tag.
 
-> **Resolution note:** `<Code>` and `highlightCode()` run Arborium at render time, so `@arborium/arborium` must be resolvable from your project. pnpm's isolated `node_modules` doesn't hoist transitive dependencies, so install it as a direct dependency:
+> [!CAUTION]
+> The `<Code>` component and `highlightCode()` run Arborium at render time, so `@arborium/arborium` must be resolvable from your project. Because pnpm keeps dependencies in an isolated `node_modules` layout and does not hoist transitive dependencies, you'll need to install `@arborium/arborium` as a direct dependency:
 >
 > ```sh
 > pnpm add @arborium/arborium
 > ```
 >
-> Without it, highlighting silently falls back to plain text (a `[arborium] Failed to load host` warning appears in the build log). The rehype plugins are unaffected because they resolve from the `astro-arborium` package itself.
+> Without a direct dependency, highlighting falls back to plain text and the build log shows a `[arborium] Failed to load host` warning. The rehype plugins are not affected because they resolve from the `astro-arborium` package itself.
 
 ## Configuration
 
-Pass a `languages` array to control which code blocks are highlighted. Defaults to the original 7 languages.
+Pass a `languages` array to control which code blocks are highlighted. The default is the original seven languages.
 
 ```js
 import arborium, { ALL_LANGUAGES } from "astro-arborium"
@@ -137,11 +139,11 @@ export default defineConfig({
 })
 ```
 
-Language identifiers match the Arborium package names (e.g. `c-sharp`, `cpp`, `typescript`).
+Language identifiers match the Arborium package names (for example, `c-sharp`, `cpp`, and `typescript`).
 
 ## Themes
 
-Pass a `theme` option to pick one of Arborium's bundled themes. Defaults to `"one-dark"`.
+Pass a `theme` option to select one of the themes bundled with Arborium. The default is `"one-dark"`.
 
 ```js
 import arborium from "astro-arborium"
@@ -149,7 +151,7 @@ import arborium from "astro-arborium"
 // Use different themes for light and dark mode.
 const theme = { light: "github-light", dark: "one-dark" }
 
-// Or replace the line above with a single theme or no bundled theme styles:
+// Or replace the line above with a single theme, or no bundled theme styles:
 // const theme = "tokyo-night"
 // const theme = false
 
@@ -161,11 +163,11 @@ export default defineConfig({
 
 `THEMES` exports all 33 bundled theme names.
 
-When `theme: false`, no styles are bundled automatically. You can still import `astro-arborium/style.css` for the original One Dark look, or bring your own Arborium theme CSS.
+When `theme: false`, no styles are bundled automatically. You can still import the `astro-arborium/style.css` file for the original One Dark look, or provide your own Arborium theme CSS.
 
 ## Supported languages
 
-All 113 Arborium grammars are supported (see [`ALL_LANGUAGES`](./src/rehype.ts) for the complete, authoritative list). Install the matching `@arborium/<lang>` package for any language you enable.
+All 113 Arborium grammars are supported. For the complete list, see [`ALL_LANGUAGES`](./packages/astro-arborium/src/rehype.ts). Install the matching `@arborium/<lang>` package for any language you enable.
 
 The default languages are:
 
@@ -179,19 +181,21 @@ The default languages are:
 
 ## Exports
 
-| Subpath                        | Description                                                            |
-| ------------------------------ | ---------------------------------------------------------------------- |
-| `astro-arborium`               | Astro integration (default export) + helpers (`highlightCode`, config) |
-| `astro-arborium/rehype`        | `rehypeHighlight`, `rehypeCodeFrame`, `rehypeArborium`, `createCodeFrame` |
-| `astro-arborium/highlight`     | `highlightCode`, `arboriumConfig`, `createArboriumConfig`              |
-| `astro-arborium/labels`        | `getLanguageLabel`, `LANGUAGE_LABELS`                                  |
-| `astro-arborium/components`    | `<Code>` Astro component                                               |
-| `astro-arborium/client`        | Copy-button client script (auto-imported by the integration)           |
-| `astro-arborium/style.css`     | Default One Dark theme CSS                                             |
+The package exposes the following subpaths:
+
+| Subpath | Description |
+| --- | --- |
+| `astro-arborium` | Astro integration (default export) and helpers (`highlightCode`, configuration) |
+| `astro-arborium/rehype` | `rehypeHighlight`, `rehypeCodeFrame`, `rehypeArborium`, and `createCodeFrame` |
+| `astro-arborium/highlight` | `highlightCode`, `arboriumConfig`, and `createArboriumConfig` |
+| `astro-arborium/labels` | `getLanguageLabel` and `LANGUAGE_LABELS` |
+| `astro-arborium/components` | The `<Code>` Astro component |
+| `astro-arborium/client` | Copy-button client script (imported automatically by the integration) |
+| `astro-arborium/style.css` | Default One Dark theme CSS |
 
 ## Example
 
-See the `website/` directory in this repository for a demo landing page.
+For a demo landing page, see the `website/` directory in this repository.
 
 ## License
 
