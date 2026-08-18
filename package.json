@@ -6,7 +6,11 @@
   "scripts": {
     "build": "pnpm --filter astro-arborium build",
     "typecheck": "pnpm --filter astro-arborium typecheck",
+    "lint": "oxlint",
     "sync-meta": "cp packages/astro-arborium/README.md packages/astro-arborium/LICENSE* ."
   },
-  "packageManager": "pnpm@11.22.0"
+  "packageManager": "pnpm@11.22.0",
+  "devDependencies": {
+    "oxlint": "^1.78.0"
+  }
 }
