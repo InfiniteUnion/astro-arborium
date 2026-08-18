@@ -6,11 +6,14 @@ export interface Props {
   meta?: string
 }
 
-const { name, href, color = "var(--lavender)", meta = "lang" } = Astro.props
+const { name, href, color = "var(--color-lavender)", meta = "lang" } = Astro.props
 ---
 
-<a class="lang-card" href={href}>
-  <span class="lang-dot" style={`background: ${color};`}></span>
-  <span class="lang-name">{name}</span>
-  <span class="lang-meta">{meta}</span>
+<a
+  class="flex items-center gap-4 p-5 bg-surface border-2 border-outline rounded-[22px] shadow-sticker no-underline text-ink transition-[transform,box-shadow] duration-150 ease-in-out hover:-translate-y-1 hover:-rotate-1 hover:shadow-[8px_8px_0_var(--shadow-strong)] animate-pop-in"
+  href={href}
+>
+  <span class="w-5 h-5 rounded-full border-2 border-outline shrink-0" style={`background: ${color};`}></span>
+  <span class="font-display font-bold text-xl">{name}</span>
+  <span class="ml-auto text-[0.85rem] font-bold text-ink-muted uppercase tracking-[0.08em]">{meta}</span>
 </a>

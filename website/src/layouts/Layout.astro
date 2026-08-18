@@ -5,7 +5,7 @@ const { title = "astro-arborium" } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,35 +34,54 @@ const { title = "astro-arborium" } = Astro.props
       rel="stylesheet"
     />
   </head>
-  <body>
-    <div class="theme-picker" role="group" aria-label="Color theme">
-      <button class="theme-picker__button" type="button" data-theme-value="system" aria-pressed="true">
-        <span class="theme-picker__icon" aria-hidden="true">◐</span>
+  <body class="relative min-h-screen overflow-x-clip bg-cream text-ink font-body text-lg leading-[1.65] antialiased">
+    <div
+      class="fixed top-4 right-4 z-[200] inline-flex items-center gap-[0.2rem] p-[0.3rem] border-2 border-outline rounded-full bg-[color-mix(in_srgb,var(--color-surface)_92%,transparent)] shadow-[4px_4px_0_var(--shadow-medium)] backdrop-blur-[12px] max-[480px]:top-[0.65rem] max-[480px]:right-[0.65rem]"
+      role="group"
+      aria-label="Color theme"
+    >
+      <button
+        class='inline-flex items-center gap-[0.3rem] min-h-8 px-[0.65rem] py-[0.35rem] border-0 rounded-full bg-transparent text-ink-muted font-display text-[0.78rem] font-bold leading-none cursor-pointer transition-[color,background-color,transform] duration-150 ease-in-out hover:text-ink hover:-translate-y-px focus-visible:outline-3 focus-visible:outline-sky focus-visible:outline-offset-2 [&[aria-pressed=true]]:bg-[color-mix(in_srgb,var(--color-lavender)_18%,var(--color-surface))] [&[aria-pressed=true]]:text-ink [&[aria-pressed=true]]:shadow-[inset_0_0_0_1.5px_var(--color-lavender-dark)] max-[480px]:px-2'
+        type="button"
+        data-theme-value="system"
+        aria-pressed="true"
+      >
+        <span class="text-[0.9rem]" aria-hidden="true">◐</span>
         System
       </button>
-      <button class="theme-picker__button" type="button" data-theme-value="light" aria-pressed="false">
-        <span class="theme-picker__icon" aria-hidden="true">☀</span>
+      <button
+        class='inline-flex items-center gap-[0.3rem] min-h-8 px-[0.65rem] py-[0.35rem] border-0 rounded-full bg-transparent text-ink-muted font-display text-[0.78rem] font-bold leading-none cursor-pointer transition-[color,background-color,transform] duration-150 ease-in-out hover:text-ink hover:-translate-y-px focus-visible:outline-3 focus-visible:outline-sky focus-visible:outline-offset-2 [&[aria-pressed=true]]:bg-[color-mix(in_srgb,var(--color-lavender)_18%,var(--color-surface))] [&[aria-pressed=true]]:text-ink [&[aria-pressed=true]]:shadow-[inset_0_0_0_1.5px_var(--color-lavender-dark)] max-[480px]:px-2'
+        type="button"
+        data-theme-value="light"
+        aria-pressed="false"
+      >
+        <span class="text-[0.9rem]" aria-hidden="true">☀</span>
         Light
       </button>
-      <button class="theme-picker__button" type="button" data-theme-value="dark" aria-pressed="false">
-        <span class="theme-picker__icon" aria-hidden="true">☾</span>
+      <button
+        class='inline-flex items-center gap-[0.3rem] min-h-8 px-[0.65rem] py-[0.35rem] border-0 rounded-full bg-transparent text-ink-muted font-display text-[0.78rem] font-bold leading-none cursor-pointer transition-[color,background-color,transform] duration-150 ease-in-out hover:text-ink hover:-translate-y-px focus-visible:outline-3 focus-visible:outline-sky focus-visible:outline-offset-2 [&[aria-pressed=true]]:bg-[color-mix(in_srgb,var(--color-lavender)_18%,var(--color-surface))] [&[aria-pressed=true]]:text-ink [&[aria-pressed=true]]:shadow-[inset_0_0_0_1.5px_var(--color-lavender-dark)] max-[480px]:px-2'
+        type="button"
+        data-theme-value="dark"
+        aria-pressed="false"
+      >
+        <span class="text-[0.9rem]" aria-hidden="true">☾</span>
         Dark
       </button>
     </div>
-    <div class="page-bg" aria-hidden="true">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-      <div class="stars">
-        <span class="star star-1">✦</span>
-        <span class="star star-2">★</span>
-        <span class="star star-3">✦</span>
-        <span class="star star-4">✧</span>
-        <span class="star star-5">★</span>
-        <span class="star star-6">✦</span>
+    <div class="page-bg fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute w-[520px] h-[520px] -top-[140px] -right-[120px] rounded-full opacity-45 blur-[70px] bg-[radial-gradient(circle_at_30%_30%,var(--color-lavender),transparent_70%)] animate-blob-drift"></div>
+      <div class="absolute w-[440px] h-[440px] bottom-[5%] -left-[140px] rounded-full opacity-45 blur-[70px] bg-[radial-gradient(circle_at_40%_40%,var(--color-blossom),transparent_70%)] animate-blob-drift [animation-delay:-6s]"></div>
+      <div class="absolute w-[360px] h-[360px] top-[45%] left-[55%] rounded-full opacity-45 blur-[70px] bg-[radial-gradient(circle_at_50%_50%,var(--color-mint),transparent_70%)] animate-blob-drift [animation-delay:-12s]"></div>
+      <div class="absolute inset-0">
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] top-[8%] left-[8%] text-sunshine">✦</span>
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] top-[22%] right-[10%] text-blossom [animation-delay:0.4s]">★</span>
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] top-[48%] left-[4%] text-sky [animation-delay:0.8s]">✦</span>
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] top-[68%] right-[6%] text-lavender [animation-delay:1.2s]">✧</span>
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] bottom-[14%] left-[18%] text-mint [animation-delay:1.6s]">★</span>
+        <span class="absolute text-2xl leading-none animate-twinkle [text-shadow:0_0_12px_currentColor] bottom-[22%] right-[22%] text-tangerine [animation-delay:2s]">✦</span>
       </div>
     </div>
-    <main>
+    <main class="w-[min(1120px,calc(100%_-_2rem))] mx-auto pt-6 pb-24 md:pt-10 md:pb-32">
       <slot />
     </main>
     <script is:inline>

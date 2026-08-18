@@ -10,49 +10,49 @@ import { Content as JavaSnippet } from "../snippets/java.md";
 import { Content as YamlSnippet } from "../snippets/yaml.md";
 
 const showcaseItems = [
-  { id: "rust", title: "Rust", icon: "🦀", tag: "systems", color: "var(--sunshine)" },
-  { id: "typescript", title: "TypeScript", icon: "📘", tag: "web", color: "var(--lavender)" },
-  { id: "bash", title: "Bash", icon: "🐚", tag: "shell", color: "var(--tangerine)" },
-  { id: "cpp", title: "C++", icon: "⚙️", tag: "systems", color: "var(--sky)" },
-  { id: "java", title: "Java", icon: "☕", tag: "jvm", color: "var(--blossom)" },
-  { id: "yaml", title: "YAML", icon: "🔧", tag: "config", color: "var(--mint)" },
+  { id: "rust", title: "Rust", icon: "🦀", tag: "systems", color: "var(--color-sunshine)" },
+  { id: "typescript", title: "TypeScript", icon: "📘", tag: "web", color: "var(--color-lavender)" },
+  { id: "bash", title: "Bash", icon: "🐚", tag: "shell", color: "var(--color-tangerine)" },
+  { id: "cpp", title: "C++", icon: "⚙️", tag: "systems", color: "var(--color-sky)" },
+  { id: "java", title: "Java", icon: "☕", tag: "jvm", color: "var(--color-blossom)" },
+  { id: "yaml", title: "YAML", icon: "🔧", tag: "config", color: "var(--color-mint)" },
 ];
 ---
 
 <Layout title="astro-arborium">
-  <div class="hero hero--split">
-    <div class="hero__text">
-      <div class="hero__features">
-        <span class="pill pill-lavender">🌳 tree-sitter powered</span>
-        <span class="pill pill-blossom">⚡ zero runtime JS</span>
-        <span class="pill pill-mint">🚀 Astro native</span>
+  <div class="relative pt-6 pb-12 mb-4 animate-pop-in grid grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-y-10 gap-x-12 items-center max-[800px]:grid-cols-1 max-[800px]:gap-8 max-[800px]:text-center max-[800px]:pt-4 max-[800px]:pb-10">
+    <div class="min-w-0">
+      <div class="flex flex-wrap justify-start gap-3 mt-7 mb-7 max-[800px]:justify-center max-[800px]:mt-6">
+        <span class="inline-flex items-center gap-[0.4rem] px-[0.95rem] py-[0.4rem] bg-surface border-2 border-lavender-dark rounded-full font-display font-semibold text-[0.95rem] text-lavender-dark shadow-[3px_3px_0_var(--shadow-soft)]">🌳 tree-sitter powered</span>
+        <span class="inline-flex items-center gap-[0.4rem] px-[0.95rem] py-[0.4rem] bg-surface border-2 border-blossom-dark rounded-full font-display font-semibold text-[0.95rem] text-blossom-dark shadow-[3px_3px_0_var(--shadow-soft)]">⚡ zero runtime JS</span>
+        <span class="inline-flex items-center gap-[0.4rem] px-[0.95rem] py-[0.4rem] bg-surface border-2 border-mint-dark rounded-full font-display font-semibold text-[0.95rem] text-mint-dark shadow-[3px_3px_0_var(--shadow-soft)]">🚀 Astro native</span>
       </div>
-      <h1>
-        Syntax highlighting<br />with a little <span class="word-arborium">Arborium</span>
+      <h1 class="font-display font-bold text-[clamp(2.75rem,6.5vw,4.25rem)] leading-[0.95] tracking-[-0.03em] mb-4">
+        Syntax highlighting<br />with a little <span class="relative inline-block bg-[linear-gradient(135deg,var(--color-lavender),var(--color-blossom)_35%,var(--color-sky)_70%,var(--color-mint)_100%)] bg-clip-text [-webkit-background-clip:text] text-transparent after:absolute after:inset-x-0 after:bottom-[0.05em] after:h-[0.12em] after:rounded-full after:bg-[linear-gradient(90deg,var(--color-lavender),var(--color-blossom),var(--color-sky),var(--color-mint))] after:opacity-35 after:content-['']">Arborium</span>
       </h1>
-      <p class="hero-tagline">
+      <p class="max-w-[520px] mb-7 text-ink-muted text-[clamp(1.05rem,2vw,1.25rem)] font-medium max-[800px]:mx-auto">
         A lightweight Astro integration that hands your fenced code blocks to
         <code>tree-sitter</code> for fast, precise, language-aware highlighting.
       </p>
-      <div class="hero__code">
+      <div class="max-w-[520px] mb-7 max-[800px]:max-w-[560px] max-[800px]:mx-auto max-[800px]:mb-6 [&_.code-frame]:shadow-[8px_8px_0_var(--shadow-medium)] [&_.code-frame_pre]:text-[clamp(0.9rem,1.8vw,1.05rem)]">
         <InstallSnippet />
       </div>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/InfiniteUnion/astro-arborium">Github ↗</a>
-        <a class="btn btn-secondary" href="https://arborium.bearcove.eu/" target="_blank" rel="noopener noreferrer">Visit Arborium ↗</a>
+      <div class="flex flex-wrap justify-start gap-4 max-[800px]:justify-center">
+        <a class="inline-flex items-center gap-2 px-[1.6rem] py-[0.85rem] border-2 border-outline rounded-2xl font-display font-bold text-[1.05rem] no-underline cursor-pointer shadow-sticker transition-[transform,box-shadow,background-color] duration-150 ease-in-out hover:-translate-y-[3px] hover:-rotate-1 hover:shadow-[8px_8px_0_var(--shadow-strong)] active:translate-y-0 active:rotate-0 active:shadow-sticker bg-ink text-cream" href="https://github.com/InfiniteUnion/astro-arborium">Github ↗</a>
+        <a class="inline-flex items-center gap-2 px-[1.6rem] py-[0.85rem] border-2 border-outline rounded-2xl font-display font-bold text-[1.05rem] no-underline cursor-pointer shadow-sticker transition-[transform,box-shadow,background-color] duration-150 ease-in-out hover:-translate-y-[3px] hover:-rotate-1 hover:shadow-[8px_8px_0_var(--shadow-strong)] active:translate-y-0 active:rotate-0 active:shadow-sticker bg-surface text-ink" href="https://arborium.bearcove.eu/" target="_blank" rel="noopener noreferrer">Visit Arborium ↗</a>
       </div>
     </div>
-    <div class="hero__visual">
-      <img class="hero-logo" src="/logo.webp" alt="Astro Arborium logo" width="600" height="338" />
+    <div class="flex justify-center items-center min-w-0 max-[800px]:hidden">
+      <img class="w-[min(600px,100%)] h-auto drop-shadow-[0_14px_30px_var(--logo-shadow)] animate-logo-bob" src="/logo.webp" alt="Astro Arborium logo" width="600" height="338" />
     </div>
   </div>
 
-  <div class="section" id="showcase">
-    <div class="section-header">
-      <span class="icon" aria-hidden="true">🎨</span>
-      <h2>Highlight showcase</h2>
+  <div class="mt-16 animate-pop-in" id="showcase">
+    <div class="flex items-center gap-3 mb-6">
+      <span class="grid place-items-center w-11 h-11 border-2 border-outline rounded-xl bg-surface shadow-sticker text-[1.35rem]" aria-hidden="true">🎨</span>
+      <h2 class="font-display font-bold text-[clamp(1.75rem,4vw,2.5rem)]">Highlight showcase</h2>
     </div>
-    <p class="section-desc">
+    <p class="max-w-[720px] text-ink-muted font-medium mb-8">
       Tree-sitter understands the structure of each language, so keywords, types,
       strings, comments, and macros are highlighted with real semantic accuracy.
       Pick a language to see a sample.
@@ -80,13 +80,13 @@ const showcaseItems = [
     </ShowcaseTabs>
   </div>
 
-  <div class="cta-card" id="install">
-    <h2>Ready to plant some color?</h2>
-    <p>Add <code>astro-arborium</code> to your Astro project, disable the default syntax highlighter, and let Arborium handle the rest.</p>
-    <p><a class="btn" href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">Read the docs ↗</a></p>
+  <div class="mt-16 px-8 py-10 text-center bg-[linear-gradient(135deg,var(--color-lavender),var(--color-blossom))] border-2 border-outline rounded-[32px] shadow-sticker text-cta-foreground animate-pop-in" id="install">
+    <h2 class="font-display font-bold text-[clamp(1.75rem,4vw,2.75rem)] mb-3 [text-shadow:2px_2px_0_color-mix(in_srgb,var(--color-cta-foreground)_18%,transparent)]">Ready to plant some color?</h2>
+    <p class="max-w-[560px] mx-auto mb-6 font-semibold opacity-95">Add <code>astro-arborium</code> to your Astro project, disable the default syntax highlighter, and let Arborium handle the rest.</p>
+    <p><a class="inline-flex items-center gap-2 px-[1.6rem] py-[0.85rem] border-2 border-cta-foreground rounded-2xl font-display font-bold text-[1.05rem] no-underline cursor-pointer shadow-sticker transition-[transform,box-shadow,background-color] duration-150 ease-in-out hover:-translate-y-[3px] hover:-rotate-1 hover:shadow-[8px_8px_0_var(--shadow-strong)] active:translate-y-0 active:rotate-0 active:shadow-sticker bg-cta-surface text-cta-foreground hover:bg-cream" href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">Read the docs ↗</a></p>
   </div>
 
-  <footer class="site-footer">
-    <p>Made with 💜 for Astro · <a href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">InfiniteUnion/astro-arborium</a></p>
+  <footer class="mt-16 text-center text-ink-muted font-semibold text-[0.95rem]">
+    <p>Made with 💜 for Astro · <a class="text-ink" href="https://github.com/InfiniteUnion/astro-arborium" target="_blank" rel="noopener noreferrer">InfiniteUnion/astro-arborium</a></p>
   </footer>
 </Layout>

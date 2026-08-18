@@ -19,8 +19,8 @@ const panels = await Promise.all(
 )
 ---
 
-<fieldset class="showcase-tabs">
-  <legend class="showcase-tabs-legend">Language showcase</legend>
+<fieldset class="showcase-tabs relative min-w-0 m-0 p-0 border-0 animate-pop-in [animation-delay:0.1s]">
+  <legend class="sr-only">Language showcase</legend>
 
   {
     items.map((item, index) => (
@@ -28,23 +28,23 @@ const panels = await Promise.all(
         type="radio"
         name="showcase-tab"
         id={`showcase-tab-${item.id}`}
-        class="showcase-tab-input"
+        class="showcase-tab-input sr-only"
         checked={index === 0}
       />
     ))
   }
 
-  <div class="showcase-tab-bar">
+  <div class="showcase-tab-bar flex flex-wrap justify-start gap-3 mb-7 max-[640px]:gap-2">
     {
       items.map((item) => (
         <label
           for={`showcase-tab-${item.id}`}
-          class="showcase-tab"
-          style={`--tab-color: ${item.color || "var(--lavender)"};`}
+          class="showcase-tab inline-flex items-center gap-2 px-4 py-[0.55rem] bg-surface border-2 border-outline rounded-full shadow-[3px_3px_0_var(--shadow-soft)] font-display font-bold text-[0.95rem] text-ink cursor-pointer transition-[transform,box-shadow,background-color,border-color] duration-150 ease-in-out hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--shadow-medium)] max-[640px]:px-[0.85rem] max-[640px]:py-[0.45rem] max-[640px]:text-[0.9rem]"
+          style={`--tab-color: ${item.color || "var(--color-lavender)"};`}
         >
-          <span class="showcase-tab-icon" aria-hidden="true">{item.icon}</span>
-          <span class="showcase-tab-name">{item.title}</span>
-          <span class="showcase-tab-tag">{item.tag}</span>
+          <span class="text-[1.1rem] leading-none" aria-hidden="true">{item.icon}</span>
+          <span class="translate-y-[0.03em]">{item.title}</span>
+          <span class="px-[0.55rem] py-[0.15rem] border-[1.5px] border-outline rounded-full bg-surface text-[0.65rem] font-bold uppercase tracking-[0.06em] max-[640px]:hidden">{item.tag}</span>
         </label>
       ))
     }
@@ -53,7 +53,7 @@ const panels = await Promise.all(
   {
     panels.map((panel) => (
       <section
-        class={`showcase-panel showcase-panel--${panel.id}`}
+        class={`showcase-panel animate-fade-panel`}
         set:html={panel.html}
       />
     ))
