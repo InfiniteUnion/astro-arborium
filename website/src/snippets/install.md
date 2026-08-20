@@ -1,3 +1,3 @@
 ```bash
-npm i astro-arborium
+npm i @infiniteunion/astro-arborium
 ```

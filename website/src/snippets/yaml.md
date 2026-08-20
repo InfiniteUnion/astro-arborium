@@ -11,7 +11,7 @@ astro:
   markdown:
     syntaxHighlight: false
   integrations:
-    - astro-arborium
+    - @infiniteunion/astro-arborium
 
 scripts:
   dev: astro dev

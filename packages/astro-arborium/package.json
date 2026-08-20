@@ -1,8 +1,12 @@
 {
-  "name": "astro-arborium",
+  "name": "@infiniteunion/astro-arborium",
   "version": "0.0.1",
   "description": "Astro integration for Arborium syntax highlighting",
   "license": "Apache-2.0 OR MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InfiniteUnion/astro-arborium.git"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -41,7 +45,7 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsc && cp src/style.css dist/style.css && cp -r src/components dist/components",
+    "build": "tsc && cp src/style.css dist/style.css && rm -rf dist/components && cp -r src/components dist/components",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm run build && cp README.md LICENSE LICENSE-APACHE LICENSE-MIT ../../"
   },

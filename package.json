@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm --filter astro-arborium build",
-    "typecheck": "pnpm --filter astro-arborium typecheck",
+    "build": "pnpm --filter @infiniteunion/astro-arborium build",
+    "typecheck": "pnpm --filter @infiniteunion/astro-arborium typecheck",
     "lint": "oxlint",
     "sync-meta": "cp packages/astro-arborium/README.md packages/astro-arborium/LICENSE* .",
-    "release": "pnpm --filter astro-arborium exec semantic-release"
+    "release": "pnpm --filter @infiniteunion/astro-arborium exec semantic-release"
   },
   "packageManager": "pnpm@11.22.0",
   "devDependencies": {

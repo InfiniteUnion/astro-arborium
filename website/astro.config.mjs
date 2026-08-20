@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config"
 import tailwindcss from "@tailwindcss/vite"
-import arborium from "astro-arborium"
+import arborium from "@infiniteunion/astro-arborium"
 
 export default defineConfig({
   markdown: {

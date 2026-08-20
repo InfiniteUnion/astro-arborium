@@ -41,7 +41,7 @@ export const arboriumConfig: ArboriumConfig = createArboriumConfig()
  * Highlight `source` as `language` and return an HTML string of spans.
  *
  * This is the lowest-level entry point: it does not add a code frame, copy
- * button, or any CSS. Use the `<Code>` component (from `astro-arborium/components`)
+ * button, or any CSS. Use the `<Code>` component (from `@infiniteunion/astro-arborium/components`)
  * for the full chrome, or the rehype plugins for Markdown/MDX pipelines.
  *
  * @param language Arborium language identifier (e.g. `"typescript"`, `"c-sharp"`).

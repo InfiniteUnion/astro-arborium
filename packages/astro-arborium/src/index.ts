@@ -94,7 +94,7 @@ export default function arborium(options: ArboriumOptions = {}): AstroIntegratio
           injectScript("page-ssr", `import ${JSON.stringify(moduleId)};`)
         }
 
-        injectScript("page", 'import "astro-arborium/client";')
+        injectScript("page", 'import "@infiniteunion/astro-arborium/client";')
       },
     },
   }
