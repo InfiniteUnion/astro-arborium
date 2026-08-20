@@ -1,6 +1,6 @@
 {
   "name": "@infiniteunion/astro-arborium",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Astro integration for Arborium syntax highlighting",
   "license": "Apache-2.0 OR MIT",
   "repository": {
