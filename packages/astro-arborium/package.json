@@ -36,6 +36,10 @@
     "logo.png",
     "README.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "tsc && cp src/style.css dist/style.css && cp -r src/components dist/components",
     "typecheck": "tsc --noEmit",

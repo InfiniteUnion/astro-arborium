@@ -7,10 +7,14 @@
     "build": "pnpm --filter astro-arborium build",
     "typecheck": "pnpm --filter astro-arborium typecheck",
     "lint": "oxlint",
-    "sync-meta": "cp packages/astro-arborium/README.md packages/astro-arborium/LICENSE* ."
+    "sync-meta": "cp packages/astro-arborium/README.md packages/astro-arborium/LICENSE* .",
+    "release": "pnpm --filter astro-arborium exec semantic-release"
   },
   "packageManager": "pnpm@11.22.0",
   "devDependencies": {
-    "oxlint": "^1.78.0"
+    "@semantic-release/git": "^11.0.1",
+    "oxlint": "^1.78.0",
+    "semantic-release": "^25.0.9",
+    "semantic-release-monorepo": "^8.0.2"
   }
 }
