@@ -167,7 +167,7 @@ When `theme: false`, no styles are bundled automatically. You can still import t
 
 ## Supported languages
 
-All 113 Arborium grammars are supported. For the complete list, see [`ALL_LANGUAGES`](./packages/astro-arborium/src/rehype.ts). Install the matching `@arborium/<lang>` package for any language you enable.
+All 113 Arborium grammars are supported. For the complete list, see [`ALL_LANGUAGES`](./src/rehype.ts). Install the matching `@arborium/<lang>` package for any language you enable.
 
 The default languages are:
 
